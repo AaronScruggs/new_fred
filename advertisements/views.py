@@ -18,6 +18,10 @@ class MainPageView(ListView):
 
         return qs
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
 
 
 class CategoryView(ListView):
@@ -65,3 +69,7 @@ class AllCityList(ListView):
     model = City
     context_object_name = "cities"
     template_name = "advertisements/all_cities.html"
+
+
+
+
