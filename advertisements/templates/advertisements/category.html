@@ -1,0 +1,15 @@
+{% extends "advertisements/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<ul class="list-group">
+    {% for ad in advertisements %}
+        <li><a href="{% url 'advertisement_detail' ad.id %}">{{ ad.title }}</a></li>
+        {% if ad.price %}
+            <li>${{ ad.price }}</li>
+            <li>{{ ad.created_time }}</li>
+        {% endif %}
+    {% endfor %}
+
+</ul>
+{% endblock %}
