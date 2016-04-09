@@ -9,7 +9,7 @@
     <h4><a href="{% url 'logout' %}">Logout</a> </h4>
 
     {% if user.is_authenticated %}
-        <h5>Greetings {{ user.username }}</h5>
+        <h5>Greetings <a href="{% url 'user_detail' user.id %}"> {{ user.username }}</a></h5>
     {% endif %}
 
 <h4><a href="{% url 'advertisement_create' %}">Create a post</a> </h4>

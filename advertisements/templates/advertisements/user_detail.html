@@ -1,0 +1,17 @@
+{% extends "advertisements/base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Bookmark List{% endblock %}
+
+{% block content %}
+<h1>{{ profiled_user.username }}</h1>
+
+<ul>
+{% for ad in advertisements %}
+    <li>{{ ad.title }}</li>
+    <li>{{ ad.price }}</li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}

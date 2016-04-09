@@ -2,6 +2,16 @@
 {% load bootstrap3 %}
 
 {% block content %}
+
+    <a href="{% url 'main_page' %}">Return to main page</a>
+
+    <h3>{{ category.title }}</h3>
+
+    <a href="?price=high">high price</a>
+    <a href="?price=low">low price</a>
+    <a href="?modified=new">newest</a>
+    <a href="?modified=old">oldest</a>
+
 <ul class="list-group">
     {% for ad in advertisements %}
         <li><a href="{% url 'advertisement_detail' ad.id %}">{{ ad.title }}</a></li>

@@ -24,3 +24,5 @@ class RegisterUser(CreateView):
 class UpdateProfile(LoginRequiredMixin, UpdateView):
 
     pass
+
+

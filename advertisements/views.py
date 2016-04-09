@@ -2,9 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, RedirectView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, RedirectView, UpdateView
 
-from advertisements.forms import AdvertisementForm
+from advertisements.forms import AdvertisementForm, AdvertisementUpdateForm
 from advertisements.models import Advertisement, SubCategory, Category, City
 
 
@@ -18,6 +18,21 @@ def get_current_city(request):
         return City.objects.get(pk=city_id)
     else:
         return None
+
+
+def query_sort(get, qs):
+
+    if "price" in get and get["price"] == "low":
+        qs = qs.order_by("price")
+    elif "price" in get and get["price"] == "high":
+        qs = qs.order_by("-price")
+
+    if "modified" in get and get["modified"] == "new":
+        qs = qs.order_by("-modified_time")
+    elif "modified" in get and get["modified"] == "old":
+        qs = qs.order_by("modified_time")
+
+    return qs
 
 
 
@@ -41,17 +56,10 @@ class MainPageView(ListView):
         for the current session.
         """
         context = super().get_context_data(**kwargs)
-
         city = get_current_city(self.request)
+
         if city:
             context["city_title"] = city.title
-        # city_id = self.request.session.get("city_id", None)
-        #
-        # if hasattr(self.request.user, "profile") and hasattr(self.request.user.profile, "city"):
-        #     context["city_title"] = self.request.user.profile.city.title
-        # elif city_id:
-        #     city = City.objects.get(pk=city_id)
-        #     context["city_title"] = city.title
 
         context["cities"] = City.objects.all()
         return context
@@ -67,12 +75,19 @@ class CategoryView(ListView):
     def get_queryset(self):
         category = Category.objects.get(pk=self.kwargs["pk"])
         city = get_current_city(self.request)
+
+        qs = Advertisement.objects.filter(subcategory__category=category)
+
         if city:
-            return Advertisement.objects.filter(subcategory__category=category, city__id=city.id)
-        else:
-            return Advertisement.objects.filter(subcategory__category=category)
-        # qs = Advertisement.objects.filter(subcategory__category=category)
-        # return qs
+            qs = qs.filter(city__id=city.id)
+
+        return query_sort(self.request.GET, qs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(pk=self.kwargs["pk"])
+        context["category"] = category
+        return context
 
 
 class SubCategoryView(ListView):
@@ -82,12 +97,18 @@ class SubCategoryView(ListView):
     def get_queryset(self):
         subcategory = SubCategory.objects.get(pk=self.kwargs["pk"])
         city = get_current_city(self.request)
-        if city:
-            return Advertisement.objects.filter(subcategory=subcategory, city__id=city.id)
-        else:
-            return Advertisement.objects.filter(subcategory=subcategory)
-        #return Advertisement.objects.filter(subcategory=subcategory)
 
+        qs = Advertisement.objects.filter(subcategory=subcategory)
+        if city:
+            qs = qs.filter(city__id=city.id)
+
+        return query_sort(self.request.GET, qs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = SubCategory.objects.get(pk=self.kwargs["pk"])
+        context["category"] = category
+        return context
 
 class AdvertisementDetail(DetailView):
     # Fill out template
@@ -110,6 +131,14 @@ class AdvertisementCreate(CreateView):
         return super().form_valid(form)
 
 
+class AdvertisementUpdate(LoginRequiredMixin, UpdateView):
+    model = Advertisement
+    form_class = AdvertisementUpdateForm
+    template_name = "advertisements/advertisement_update.html"
+    success_url = reverse_lazy("main_page")
+    pk_url_kwarg = "id"
+
+
 class AllCityList(ListView):
     model = City
     context_object_name = "cities"
@@ -127,3 +156,26 @@ class CityRedirect(RedirectView):
             self.request.user.profile.city = chosen_city
             self.request.user.profile.save()
         return reverse("main_page")
+
+
+class UserDetail(ListView):
+    template_name = "advertisements/user_detail.html"
+    context_object_name = "advertisements"
+
+    def get_queryset(self):
+        profiled_user = User.objects.get(pk=self.kwargs['id'])
+        return Advertisement.objects.filter(
+            user=profiled_user).order_by("-modified_time")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profiled_user = User.objects.get(pk=self.kwargs['id'])
+        context["profiled_user"] = profiled_user
+        context["user_match"] = self.request.user == profiled_user
+        return context
+
+
+
+
+
+

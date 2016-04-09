@@ -8,3 +8,11 @@ class AdvertisementForm(forms.ModelForm):
         model = Advertisement
         fields = ("title", "description", "price", "subcategory", "phone_number",
                   "image", "email", "zipcode")
+
+
+class AdvertisementUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Advertisement
+        fields = ("description", "price", "phone_number", "image", "zipcode")
+### finish update view ###
