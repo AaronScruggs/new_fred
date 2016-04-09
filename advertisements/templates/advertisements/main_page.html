@@ -1,8 +1,19 @@
 {% extends "advertisements/base.html" %}
 {% block content%}
+    {% if city_title %}
+    <h2>{{ city_title }} Fredslist</h2>
+    {% endif %}
 
     <h3><a href="{% url 'register' %}">Register</a> </h3>
     <h4><a href="{% url 'login' %}">Login</a> </h4>
+    <h4><a href="{% url 'logout' %}">Logout</a> </h4>
+
+    {% if user.is_authenticated %}
+        <h5>Greetings {{ user.username }}</h5>
+    {% endif %}
+
+<h4><a href="{% url 'advertisement_create' %}">Create a post</a> </h4>
+
 <ul>
 {% for category in categories %}
     <li><h1><a href="{% url 'category_list' category.0.id %}"> {{ category.0 }}</a></h1>
@@ -16,4 +27,11 @@
 {% endfor %}
 </ul>
 
+<h3>More Cities</h3>
+<ul>
+{% for city in cities %}
+<li><a href="{% url 'city_redirect' city.id %}"> {{ city.title }}</a></li>
+{% endfor %}
+
+</ul>
 {% endblock %}

@@ -15,9 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth.views import logout
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.conf import settings
+from django.conf.urls.static import static
 
 from advertisements.views import CategoryView, AdvertisementDetail, \
-    SubCategoryView, AdvertisementCreate, MainPageView, AllCityList
+    SubCategoryView, AdvertisementCreate, MainPageView, AllCityList, \
+    CityRedirect
 from profiles.views import RegisterUser
 
 urlpatterns = [
@@ -30,5 +35,9 @@ urlpatterns = [
     url(r'^advertisements/create/$', AdvertisementCreate.as_view(), name = "advertisement_create"),
     url(r'^mainpage/$', MainPageView.as_view(), name="main_page"),
     url(r'^allcities/$', AllCityList.as_view(), name="all_cities"),
+    url(r'cities/redirect/(?P<id>\d+)/$', CityRedirect.as_view(), name="city_redirect"),
+    url(r'^logout/$', logout, {'next_page': reverse_lazy("main_page")},
+        name='logout'),
     url('^', include('django.contrib.auth.urls')),
-]
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
