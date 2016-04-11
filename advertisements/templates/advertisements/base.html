@@ -1,20 +1,31 @@
 {% load bootstrap3 %}
-
+{% load staticfiles %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}List of Freds{% endblock %}</title>
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 
 </head>
 <body>
     <div class="container">
+    <a href="{% url 'main_page' %}">Return to main page</a>
+
+    {% if user.is_authenticated %}
+        <h5>Greetings <a href="{% url 'user_detail' user.id %}"> {{ user.username }}</a></h5>
+        <h4><a href="{% url 'logout' %}">Logout</a> </h4>
+    {% else %}
+        <h3><a href="{% url 'register' %}">Register</a> </h3>
+        <h4><a href="{% url 'login' %}">Login</a> </h4>
+    {% endif %}
+    <h4><a href="{% url 'advertisement_create' %}">Create a post</a> </h4>
+
     {% block content %}
     {% endblock %}
-
-
+</div>
 </body>
 </html>

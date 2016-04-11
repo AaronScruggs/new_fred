@@ -1,0 +1,14 @@
+{% extends "advertisements/base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Deletion{% endblock %}
+
+{% block content %}
+    <h1>Advertisements</h1>
+<form action="{% url 'advertisement_delete' advertisement.id %}" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+
+{% endblock %}

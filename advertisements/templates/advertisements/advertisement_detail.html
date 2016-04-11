@@ -2,15 +2,19 @@
 {% load bootstrap3 %}
 
 {% block content%}
-
+<h3>
 {{ advertisement.title }}
-{{ advertisement.description }}
-
+${{ advertisement.price }}
+{{ advertisement.city }}
+</h3>
     {% if advertisement.image %}
 
     <img src="{{ advertisement.image.url }}" height="100" width="100">
 
     {% endif %}
-
-
+    <br>
+    <br>
+    <h5>
+{{ advertisement.description }}
+</h5>
 {% endblock %}

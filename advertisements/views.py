@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, RedirectView, UpdateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, RedirectView, UpdateView, DeleteView
 
 from advertisements.forms import AdvertisementForm, AdvertisementUpdateForm
 from advertisements.models import Advertisement, SubCategory, Category, City
@@ -33,7 +33,6 @@ def query_sort(get, qs):
         qs = qs.order_by("modified_time")
 
     return qs
-
 
 
 class MainPageView(ListView):
@@ -67,7 +66,6 @@ class MainPageView(ListView):
 
 class CategoryView(ListView):
 
-    # need to add category title on page.
 
     template_name = "advertisements/subcategory.html"
     context_object_name = "advertisements"
@@ -87,6 +85,9 @@ class CategoryView(ListView):
         context = super().get_context_data(**kwargs)
         category = Category.objects.get(pk=self.kwargs["pk"])
         context["category"] = category
+
+        view = self.request.GET.get("view", "list")
+        context['view'] = view
         return context
 
 
@@ -108,7 +109,11 @@ class SubCategoryView(ListView):
         context = super().get_context_data(**kwargs)
         category = SubCategory.objects.get(pk=self.kwargs["pk"])
         context["category"] = category
+
+        view = self.request.GET.get("view", "list")
+        context['view'] = view
         return context
+
 
 class AdvertisementDetail(DetailView):
     # Fill out template
@@ -125,7 +130,7 @@ class AdvertisementCreate(CreateView):
     pk_url_kwarg = "id"  # superfluous?
 
     def form_valid(self, form):
-        if self.request.user is User:
+        if self.request.user.pk:
             form.instance.user = self.request.user
         form.instance.city = get_current_city(self.request)
         return super().form_valid(form)
@@ -137,6 +142,12 @@ class AdvertisementUpdate(LoginRequiredMixin, UpdateView):
     template_name = "advertisements/advertisement_update.html"
     success_url = reverse_lazy("main_page")
     pk_url_kwarg = "id"
+
+
+class AdvertisementDelete(DeleteView):
+    model = Advertisement
+    template_name = "advertisements/advertisement_delete.html"
+    success_url = reverse_lazy("main_page")
 
 
 class AllCityList(ListView):
@@ -163,19 +174,15 @@ class UserDetail(ListView):
     context_object_name = "advertisements"
 
     def get_queryset(self):
-        profiled_user = User.objects.get(pk=self.kwargs['id'])
+        # pretty this up when i make docs
+
+        profiled_user = User.objects.get(pk=self.kwargs['pk'])
         return Advertisement.objects.filter(
             user=profiled_user).order_by("-modified_time")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profiled_user = User.objects.get(pk=self.kwargs['id'])
+        profiled_user = User.objects.get(pk=self.kwargs['pk'])
         context["profiled_user"] = profiled_user
         context["user_match"] = self.request.user == profiled_user
         return context
-
-
-
-
-
-

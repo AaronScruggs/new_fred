@@ -29,8 +29,6 @@ class SubCategory(models.Model):
 
 class Advertisement(models.Model):
 
-    #double check that I have all of the fields
-
     title = models.CharField(max_length=255, null=True)
     description = models.TextField(max_length=2000, null=True)
     price = models.IntegerField(null=True, blank=True)
@@ -44,7 +42,12 @@ class Advertisement(models.Model):
     user = models.ForeignKey(User, null=True, blank=True)
 
     created_time = models.DateTimeField(auto_now_add=True, null=True)
-    modified_time = models.DateTimeField(auto_now_add=True, null=True)
+    modified_time = models.DateTimeField(auto_now=True, null=True)
+
+    @property
+    def display_date(self):
+        date = self.modified_time
+        return "{:%b} {}".format(date, date.day)
 
     def __str__(self):
         return self.title

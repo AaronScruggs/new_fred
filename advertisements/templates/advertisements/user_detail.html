@@ -8,8 +8,19 @@
 
 <ul>
 {% for ad in advertisements %}
-    <li>{{ ad.title }}</li>
-    <li>{{ ad.price }}</li>
+    <li  class="list-group-item">
+        {{ ad.display_date }}
+        <a href="{% url 'advertisement_detail' ad.id %}"> {{ ad.title }}</a>
+        {% if ad.price %}
+            ${{ ad.price }}
+        {% endif %}
+         {{ ad.city }}
+            <br>
+    </li>
+    {% if user_match %}
+        <li><a href="{% url 'advertisement_update' ad.id %}"> update</a></li>
+        <li><a href="{% url 'advertisement_delete' ad.id %}">delete</a> </li>
+    {% endif %}
 {% endfor %}
 </ul>
 

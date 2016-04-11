@@ -3,25 +3,64 @@
 
 {% block content %}
 
-    <a href="{% url 'main_page' %}">Return to main page</a>
 
-    <h3>{{ category.title }}</h3>
 
-    <a href="?price=high">high price</a>
-    <a href="?price=low">low price</a>
-    <a href="?modified=new">newest</a>
-    <a href="?modified=old">oldest</a>
+    <h1>{{ category.title }}</h1>
 
-<ul class="list-group">
+
+    <div class="btn-group" role="group">
+  <button type="button" class="btn btn-default"><a href="?price=high">high price</a></button>
+  <button type="button" class="btn btn-default"><a href="?price=low">low price</a></button>
+  <button type="button" class="btn btn-default"><a href="?modified=new">newest</a></button>
+    <button type="button" class="btn btn-default"><a href="?modified=old">oldest</a></button>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default"><a href="?view=list">list</a></button>
+        <button type="button" class="btn btn-default"><a href="?view=thumb">thumb</a></button>
+        <button type="button" class="btn btn-default"><a href="?view=gallery">gallery</a></button>
+    </div>
+<br>
+    <br>
+<div class="list-group">
     {% for ad in advertisements %}
-        <li><a href="{% url 'advertisement_detail' ad.id %}">{{ ad.title }}</a></li>
-        {% if ad.price %}
-            <li>${{ ad.price }}</li>
-            <li>{{ ad.created_time }}</li>
-            <li>{{ ad.city }}</li>
-            <br>
+
+
+        {% if view == "thumb" or view == "gallery" %}
+            <li  class="list-group-item">
+            {% if ad.image and view == "thumb" %}
+                <img src="{{ ad.image.url }}" height="100" width="100">
+            {% elif ad.image and view == "gallery" %}
+                <img src="{{ ad.image.url }}" height="400" width="400">
+            {% endif %}
+            {{ ad.display_date }}
+            <a href="{% url 'advertisement_detail' ad.id %}"> {{ ad.title }}</a>
+            {% if ad.price %}
+                ${{ ad.price }}
+            {% endif %}
+             {{ ad.city }}
+                <br>
+            </li>
+
+        {% else %}
+            <li  class="list-group-item">
+            {{ ad.display_date }}
+            <a href="{% url 'advertisement_detail' ad.id %}"> {{ ad.title }}</a>
+            {% if ad.price %}
+                ${{ ad.price }}
+            {% endif %}
+             {{ ad.city }}
+                <br>
+            </li>
+
         {% endif %}
+
+
+
     {% endfor %}
 
-</ul>
+</div>
 {% endblock %}
