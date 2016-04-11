@@ -8,24 +8,19 @@
     <h1>{{ category.title }}</h1>
 
 
-
-  <a href="?price=high">high price</a>
-  <a href="?price=low">low price</a>
-
     <div class="btn-group" role="group">
-  <button type="button" class="btn btn-default"><a href="?price=high">high price</a></button>
-  <button type="button" class="btn btn-default"><a href="?price=low">low price</a></button>
-  <button type="button" class="btn btn-default"><a href="?modified=new">newest</a></button>
-    <button type="button" class="btn btn-default"><a href="?modified=old">oldest</a></button>
+  <a href="?price=high"><button type="button" class="btn btn-default">high price</button></a>
+  <a href="?price=low"><button type="button" class="btn btn-default">low price</button></a>
+  <a href="?modified=new"><button type="button" class="btn btn-default">newest</button></a>
+    <a href="?modified=old"><button type="button" class="btn btn-default">oldest</button></a>
     </div>
-
     <br>
     <br>
 
     <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default"><a href="?view=list">list</a></button>
-        <button type="button" class="btn btn-default"><a href="?view=thumb">thumb</a></button>
-        <button type="button" class="btn btn-default"><a href="?view=gallery">gallery</a></button>
+        <a href="?view=list"><button type="button" class="btn btn-default">list</button></a>
+        <a href="?view=thumb"><button type="button" class="btn btn-default">thumb</button></a>
+        <a href="?view=gallery"><button type="button" class="btn btn-default">gallery</button></a>
     </div>
 <br>
     <br>
@@ -38,7 +33,7 @@
             {% if ad.image and view == "thumb" %}
                 <img src="{{ ad.image.url }}" height="100" width="100">
             {% elif ad.image and view == "gallery" %}
-                <img src="{{ ad.image.url }}" height="400" width="400">
+               <div> <img src="{{ ad.image.url }}" height="400" width="400"></div>
             {% endif %}
             {{ ad.display_date }}
             <a href="{% url 'advertisement_detail' ad.id %}"> {{ ad.title }}</a>
@@ -67,4 +62,5 @@
     {% endfor %}
 
 </div>
+    {% bootstrap_pagination page_obj %}
 {% endblock %}

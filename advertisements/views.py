@@ -66,9 +66,9 @@ class MainPageView(ListView):
 
 class CategoryView(ListView):
 
-
     template_name = "advertisements/subcategory.html"
     context_object_name = "advertisements"
+    paginate_by = 20
 
     def get_queryset(self):
         category = Category.objects.get(pk=self.kwargs["pk"])
@@ -94,6 +94,7 @@ class CategoryView(ListView):
 class SubCategoryView(ListView):
     template_name = "advertisements/subcategory.html"
     context_object_name = "advertisements"
+    paginate_by = 20
 
     def get_queryset(self):
         subcategory = SubCategory.objects.get(pk=self.kwargs["pk"])

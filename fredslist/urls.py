@@ -28,19 +28,20 @@ from profiles.views import RegisterUser
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/register/$', RegisterUser.as_view(), name="register"),
-    url(r'^advertisements/(?P<pk>\d+)/$', AdvertisementDetail.as_view(), name="advertisement_detail"),
-    url(r'^subcategory/(?P<pk>\d+)/$', SubCategoryView.as_view(), name="subcategory_list"),
+                  url(r'^users/detail/(?P<pk>\d+)/$', UserDetail.as_view(),
+                      name="user_detail"),
+    url(r'^advertisements/', include("advertisements.urls")),
+    url(r'^subcategory/(?P<pk>\d+)/$', SubCategoryView.as_view(),
+        name="subcategory_list"),
     url(r'^category/(?P<pk>\d+)/$', CategoryView.as_view(),
         name="category_list"),
-    url(r'^advertisements/create/$', AdvertisementCreate.as_view(), name = "advertisement_create"),
-    url(r'^advertisements/update/(?P<id>\d+)/$', AdvertisementUpdate.as_view(), name="advertisement_update"),
-    url(r'^advertisements/delete/(?P<pk>\d+)/$', AdvertisementDelete.as_view(), name="advertisement_delete"),
     url(r'^mainpage/$', MainPageView.as_view(), name="main_page"),
     url(r'^allcities/$', AllCityList.as_view(), name="all_cities"),
-    url(r'cities/redirect/(?P<id>\d+)/$', CityRedirect.as_view(), name="city_redirect"),
+    url(r'cities/redirect/(?P<id>\d+)/$', CityRedirect.as_view(),
+        name="city_redirect"),
     url(r'^logout/$', logout, {'next_page': reverse_lazy("main_page")},
         name='logout'),
-    url(r'^users/detail/(?P<pk>\d+)/$', UserDetail.as_view(), name="user_detail"),
+
     url('^', include('django.contrib.auth.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
