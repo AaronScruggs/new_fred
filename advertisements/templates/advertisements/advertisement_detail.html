@@ -9,12 +9,12 @@ ${{ advertisement.price }}
 </h3>
     {% if advertisement.image %}
 
-    <img src="{{ advertisement.image.url }}" height="100" width="100">
+    <img src="{{ advertisement.image.url }}" height="600" width="600">
 
     {% endif %}
     <br>
     <br>
-    <h5>
+    <h4>
 {{ advertisement.description }}
-</h5>
+</h4>
 {% endblock %}

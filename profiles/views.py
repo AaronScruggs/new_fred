@@ -1,9 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView
+
 
 from profiles.models import Profile
 
@@ -19,10 +18,3 @@ class RegisterUser(CreateView):
         response = super().form_valid(form)
         Profile.objects.create(user=self.object)
         return response
-
-
-class UpdateProfile(LoginRequiredMixin, UpdateView):
-
-    pass
-
-

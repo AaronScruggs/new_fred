@@ -8,6 +8,7 @@
 
 <ul>
 {% for ad in advertisements %}
+    <br>
     <li  class="list-group-item">
         {{ ad.display_date }}
         <a href="{% url 'advertisement_detail' ad.id %}"> {{ ad.title }}</a>

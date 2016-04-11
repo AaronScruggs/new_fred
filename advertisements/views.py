@@ -1,18 +1,25 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, RedirectView, UpdateView, DeleteView
+from django.shortcuts import get_object_or_404
+from django.views.generic import ListView, DetailView, CreateView,\
+    RedirectView, UpdateView, DeleteView
 
 from advertisements.forms import AdvertisementForm, AdvertisementUpdateForm
 from advertisements.models import Advertisement, SubCategory, Category, City
 
 
 def get_current_city(request):
-    # return profile city, session city, or none. Checked in that order.
+    """
+    Checks for a city to filter results on. First the user profile is checked
+    for a preference, then the session.
+    :param request: Any self.request.
+    :return: The proper city or None.
+    """
     city_id = request.session.get("city_id", None)
 
-    if hasattr(request.user, "profile") and hasattr(request.user.profile, "city"):
+    if hasattr(request.user, "profile") and hasattr(
+            request.user.profile, "city"):
         return request.user.profile.city
     elif request.session.get("city_id", None):
         return City.objects.get(pk=city_id)
@@ -21,13 +28,19 @@ def get_current_city(request):
 
 
 def query_sort(get, qs):
+    """
+    This is a helper function for use inside get_queryset.
+    :param get: A self.request.GET object possibly containing a querystring
+    parameter for sorting advertisements.
+    :param qs: The queryset for a category or subcategory.
+    :return: A sorted queryset.
+    """
 
     if "price" in get and get["price"] == "low":
         qs = qs.order_by("price")
     elif "price" in get and get["price"] == "high":
         qs = qs.order_by("-price")
-
-    if "modified" in get and get["modified"] == "new":
+    elif "modified" in get and get["modified"] == "new":
         qs = qs.order_by("-modified_time")
     elif "modified" in get and get["modified"] == "old":
         qs = qs.order_by("modified_time")
@@ -40,6 +53,10 @@ class MainPageView(ListView):
     context_object_name = "categories"
 
     def get_queryset(self):
+        """
+        :return: A queryset of all categories and thier associated
+        subcategories.
+        """
         qs = []
         for cat in Category.objects.all():
             qs.append((cat, SubCategory.objects.filter(category=cat)))
@@ -71,6 +88,9 @@ class CategoryView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
+        """
+        :return: A queryset filtered by city and category.
+        """
         category = Category.objects.get(pk=self.kwargs["pk"])
         city = get_current_city(self.request)
 
@@ -82,6 +102,10 @@ class CategoryView(ListView):
         return query_sort(self.request.GET, qs)
 
     def get_context_data(self, **kwargs):
+        """
+        view is the display view ('list', 'thumb', or 'gallery') selected
+        by the user.
+        """
         context = super().get_context_data(**kwargs)
         category = Category.objects.get(pk=self.kwargs["pk"])
         context["category"] = category
@@ -92,6 +116,9 @@ class CategoryView(ListView):
 
 
 class SubCategoryView(ListView):
+    """
+    This view is the same as CategoryView outside of the category filtering.
+    """
     template_name = "advertisements/subcategory.html"
     context_object_name = "advertisements"
     paginate_by = 20
@@ -117,7 +144,6 @@ class SubCategoryView(ListView):
 
 
 class AdvertisementDetail(DetailView):
-    # Fill out template
     model = Advertisement
     template_name = "advertisements/advertisement_detail.html"
     context_object_name = "advertisement"
@@ -128,7 +154,6 @@ class AdvertisementCreate(CreateView):
     form_class = AdvertisementForm
     success_url = reverse_lazy("main_page")
     template_name = "advertisements/advertisement_create.html"
-    pk_url_kwarg = "id"  # superfluous?
 
     def form_valid(self, form):
         if self.request.user.pk:
@@ -142,7 +167,6 @@ class AdvertisementUpdate(LoginRequiredMixin, UpdateView):
     form_class = AdvertisementUpdateForm
     template_name = "advertisements/advertisement_update.html"
     success_url = reverse_lazy("main_page")
-    pk_url_kwarg = "id"
 
 
 class AdvertisementDelete(DeleteView):
@@ -175,8 +199,10 @@ class UserDetail(ListView):
     context_object_name = "advertisements"
 
     def get_queryset(self):
-        # pretty this up when i make docs
-
+        """
+        :return: All of the users advertisements, sorted by the most recently
+        created or modified.
+        """
         profiled_user = User.objects.get(pk=self.kwargs['pk'])
         return Advertisement.objects.filter(
             user=profiled_user).order_by("-modified_time")

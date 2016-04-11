@@ -11,7 +11,10 @@ class City(models.Model):
 
 
 class Category(models.Model):
-
+    """
+    A broad category of advertisements. It's view displays all of the items
+    within it's subcategories.
+    """
     title = models.CharField(max_length=255, null=True)
 
     def __str__(self):
@@ -19,7 +22,9 @@ class Category(models.Model):
 
 
 class SubCategory(models.Model):
-
+    """
+    Very similar to Category.
+    """
     title = models.CharField(max_length=255, null=True)
     category = models.ForeignKey(Category, null=True)
 
@@ -28,12 +33,16 @@ class SubCategory(models.Model):
 
 
 class Advertisement(models.Model):
-
+    """
+    The main object of the site. Ads are filtered by user, category, or
+    subcategory and are displayed in a number of ways.
+    """
     title = models.CharField(max_length=255, null=True)
     description = models.TextField(max_length=2000, null=True)
     price = models.IntegerField(null=True, blank=True)
     phone_number = models.CharField(max_length=10, null=True, blank=True)
-    image = models.ImageField(upload_to="advertisement_images/", null=True, blank=True)
+    image = models.ImageField(upload_to="advertisement_images/", null=True,
+                              blank=True)
     email = models.EmailField(max_length=254, null=True)
     zipcode = models.CharField(max_length=10, null=True, blank=True)
 

@@ -16,20 +16,19 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import logout
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
 
-from advertisements.views import CategoryView, AdvertisementDetail, \
-    SubCategoryView, AdvertisementCreate, MainPageView, AllCityList, \
-    CityRedirect, UserDetail, AdvertisementUpdate, AdvertisementDelete
+from advertisements.views import CategoryView, SubCategoryView, MainPageView,\
+    AllCityList, CityRedirect, UserDetail
 from profiles.views import RegisterUser
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/register/$', RegisterUser.as_view(), name="register"),
-                  url(r'^users/detail/(?P<pk>\d+)/$', UserDetail.as_view(),
-                      name="user_detail"),
+    url(r'^users/detail/(?P<pk>\d+)/$', UserDetail.as_view(),
+        name="user_detail"),
     url(r'^advertisements/', include("advertisements.urls")),
     url(r'^subcategory/(?P<pk>\d+)/$', SubCategoryView.as_view(),
         name="subcategory_list"),
