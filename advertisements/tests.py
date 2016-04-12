@@ -78,6 +78,3 @@ class ViewFunctionTests(TestCase):
         qs = Advertisement.objects.filter(subcategory=self.subcategory)
         sorted_qs = query_sort(request.GET, qs)
         self.assertLess(sorted_qs.first().price, sorted_qs.all()[1].price)
-
-
-
