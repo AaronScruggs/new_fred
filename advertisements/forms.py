@@ -15,7 +15,3 @@ class AdvertisementUpdateForm(forms.ModelForm):
     class Meta:
         model = Advertisement
         fields = ("description", "price", "phone_number", "image", "zipcode")
-
-
-class SearchForm(forms.Form):
-    search_box = forms.CharField(max_length=100)

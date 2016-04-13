@@ -7,8 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView,\
 from django.views.generic.edit import FormMixin
 from rest_framework.authtoken.models import Token
 
-from advertisements.forms import AdvertisementForm, AdvertisementUpdateForm, \
-    SearchForm
+from advertisements.forms import AdvertisementForm, AdvertisementUpdateForm
 from advertisements.models import Advertisement, SubCategory, Category, City
 
 
@@ -84,12 +83,11 @@ class MainPageView(ListView):
         return context
 
 
-class CategoryView(FormMixin, ListView):
+class CategoryView(ListView):
 
     template_name = "advertisements/subcategory.html"
     context_object_name = "advertisements"
     paginate_by = 20
-    form_class = SearchForm
 
     def get_queryset(self):
         """
@@ -102,11 +100,6 @@ class CategoryView(FormMixin, ListView):
 
         if city:
             qs = qs.filter(city__id=city.id)
-
-        # Should combine querystring handling with previous version.
-        # params = self.request.query_params
-        # if "search" in params:
-        #     qs = qs.filter(title__contains=params["search"])
 
         return query_sort(self.request.GET, qs)
 
@@ -124,14 +117,13 @@ class CategoryView(FormMixin, ListView):
         return context
 
 
-class SubCategoryView(FormMixin, ListView): #
+class SubCategoryView(ListView):
     """
     This view is the same as CategoryView outside of the category filtering.
     """
     template_name = "advertisements/subcategory.html"
     context_object_name = "advertisements"
     paginate_by = 20
-    form_class = SearchForm
 
     def get_queryset(self):
         subcategory = SubCategory.objects.get(pk=self.kwargs["pk"])
