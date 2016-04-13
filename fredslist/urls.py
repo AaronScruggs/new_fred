@@ -26,6 +26,7 @@ from profiles.views import RegisterUser
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
     url(r'^users/register/$', RegisterUser.as_view(), name="register"),
     url(r'^users/detail/(?P<pk>\d+)/$', UserDetail.as_view(),
         name="user_detail"),
@@ -34,13 +35,14 @@ urlpatterns = [
         name="subcategory_list"),
     url(r'^category/(?P<pk>\d+)/$', CategoryView.as_view(),
         name="category_list"),
-    url(r'^mainpage/$', MainPageView.as_view(), name="main_page"),
+
     url(r'^allcities/$', AllCityList.as_view(), name="all_cities"),
     url(r'cities/redirect/(?P<id>\d+)/$', CityRedirect.as_view(),
         name="city_redirect"),
+    url(r"^api/", include('api.urls')),
     url(r'^logout/$', logout, {'next_page': reverse_lazy("main_page")},
         name='logout'),
-
+    url(r'^$', MainPageView.as_view(), name="main_page"),
     url('^', include('django.contrib.auth.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

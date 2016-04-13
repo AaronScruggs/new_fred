@@ -4,6 +4,12 @@
 {% block content %}
 
 
+<form method="post" action="{% url 'category_list' category.id %}">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" name="submit" value="search">
+</form>
+
 
     <h1>{{ category.title }}</h1>
 

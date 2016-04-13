@@ -4,8 +4,11 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView,\
     RedirectView, UpdateView, DeleteView
+from django.views.generic.edit import FormMixin
+from rest_framework.authtoken.models import Token
 
-from advertisements.forms import AdvertisementForm, AdvertisementUpdateForm
+from advertisements.forms import AdvertisementForm, AdvertisementUpdateForm, \
+    SearchForm
 from advertisements.models import Advertisement, SubCategory, Category, City
 
 
@@ -81,11 +84,12 @@ class MainPageView(ListView):
         return context
 
 
-class CategoryView(ListView):
+class CategoryView(FormMixin, ListView):
 
     template_name = "advertisements/subcategory.html"
     context_object_name = "advertisements"
     paginate_by = 20
+    form_class = SearchForm
 
     def get_queryset(self):
         """
@@ -98,6 +102,11 @@ class CategoryView(ListView):
 
         if city:
             qs = qs.filter(city__id=city.id)
+
+        # Should combine querystring handling with previous version.
+        # params = self.request.query_params
+        # if "search" in params:
+        #     qs = qs.filter(title__contains=params["search"])
 
         return query_sort(self.request.GET, qs)
 
@@ -115,13 +124,14 @@ class CategoryView(ListView):
         return context
 
 
-class SubCategoryView(ListView):
+class SubCategoryView(FormMixin, ListView): #
     """
     This view is the same as CategoryView outside of the category filtering.
     """
     template_name = "advertisements/subcategory.html"
     context_object_name = "advertisements"
     paginate_by = 20
+    form_class = SearchForm
 
     def get_queryset(self):
         subcategory = SubCategory.objects.get(pk=self.kwargs["pk"])
@@ -212,4 +222,13 @@ class UserDetail(ListView):
         profiled_user = User.objects.get(pk=self.kwargs['pk'])
         context["profiled_user"] = profiled_user
         context["user_match"] = self.request.user == profiled_user
+
+        user_token = Token.objects.filter(user=profiled_user)[0]
+        context["token"] = user_token
+
+        new_token = self.request.GET.get("token")
+        if new_token == "new":
+            user_token.delete()
+            context["token"] = Token.objects.create(user=profiled_user)
+
         return context
