@@ -11,7 +11,7 @@ env:
   - DJANGO=1.9.5
 
 before_install:
-  - export DJANGO_SETTINGS_MODULE=chirper.travis-settings
+  - export DJANGO_SETTINGS_MODULE=fredslist.travis-settings
   - export PYTHONPATH=$HOME/builds/Aaron/fredslist
   - export PIP_USE_MIRRORS=true
 
