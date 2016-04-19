@@ -60,7 +60,7 @@ class MainPageView(ListView):
         subcategories.
         """
         qs = []
-        for cat in Category.objects.all():
+        for cat in Category.objects.select_related().all():
             qs.append((cat, SubCategory.objects.filter(category=cat)))
 
         return qs
@@ -96,7 +96,8 @@ class CategoryView(ListView):
         category = Category.objects.get(pk=self.kwargs["pk"])
         city = get_current_city(self.request)
 
-        qs = Advertisement.objects.filter(subcategory__category=category)
+        qs = Advertisement.objects.select_related().filter(
+            subcategory__category=category)
 
         if city:
             qs = qs.filter(city__id=city.id)

@@ -19,6 +19,8 @@ from django.contrib.auth.views import logout
 from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.decorators.cache import cache_page
+
 
 from advertisements.views import CategoryView, SubCategoryView, MainPageView,\
     AllCityList, CityRedirect, UserDetail
@@ -42,7 +44,8 @@ urlpatterns = [
     url(r"^api/", include('api.urls')),
     url(r'^logout/$', logout, {'next_page': reverse_lazy("main_page")},
         name='logout'),
-    url(r'^$', MainPageView.as_view(), name="main_page"),
+    url(r'^$', cache_page(60 * 5)(MainPageView.as_view()), name="main_page"),
     url('^', include('django.contrib.auth.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#cache_page(60 * 5)

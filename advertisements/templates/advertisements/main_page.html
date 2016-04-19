@@ -1,6 +1,6 @@
 {% extends "advertisements/base.html" %}
 {% block content%}
-
+{% load cache %}
 
 
 
@@ -36,13 +36,18 @@
   </div>
 
   <div class="col-md-4">
+
 <h1>More Cities</h1>
 <ul class="list-group">
+
+{% cache 120 slow_runner chirp.id%}
 {% for city in cities %}
 <li  class="list-group-item"><a href="{% url 'city_redirect' city.id %}"> {{ city.title }}</a></li>
 {% endfor %}
+{% endcache %}
 
 </ul>
+
 </div>
 
 </div>

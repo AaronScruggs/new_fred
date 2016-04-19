@@ -5,6 +5,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from advertisements.models import Category, City, SubCategory, Advertisement
+from advertisements.views import get_current_city
 from api.permissions import IsOwnerOrReadOnly
 from api.serializers import CategorySerializer, CitySerializer, \
     SubCategorySerializer, AdvertisementSerializer, UserSerializer
@@ -60,6 +61,7 @@ class ListCreateAdvertisement(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+        serializer.save(city=get_current_city(self.request))
 
     def get_queryset(self):
         qs = super().get_queryset()
