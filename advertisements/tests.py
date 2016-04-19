@@ -8,7 +8,7 @@ from advertisements.views import get_current_city, query_sort
 from profiles.models import Profile
 
 
-class ViewFunctionTests(TestCase):
+class ViewFunctionSessionTests(TestCase):
 
     def setUp(self):
         fake = Faker()
@@ -78,3 +78,29 @@ class ViewFunctionTests(TestCase):
         qs = Advertisement.objects.filter(subcategory=self.subcategory)
         sorted_qs = query_sort(request.GET, qs)
         self.assertLess(sorted_qs.first().price, sorted_qs.all()[1].price)
+
+
+class CategoryTests(TestCase):
+
+    def setUp(self):
+        self.category = Category.objects.create(title="test")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
