@@ -1,2 +1,2 @@
 [report]
-omit = */migrations/*, */heroku-settings.py
+omit = fredslist/*
