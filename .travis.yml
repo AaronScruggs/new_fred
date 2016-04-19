@@ -26,4 +26,3 @@ before_script:
 
 script:
   - coverage run --source='.' manage.py test advertisements api
-
