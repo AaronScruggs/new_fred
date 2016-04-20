@@ -8,6 +8,7 @@ from advertisements.views import get_current_city, query_sort
 from profiles.models import Profile
 from django.core.urlresolvers import reverse
 
+
 class ViewFunctionSessionTests(TestCase):
 
     def setUp(self):
@@ -86,20 +87,40 @@ class CategoryTests(TestCase):
         fake = Faker()
         self.city = City.objects.create(title="test city")
         self.category = Category.objects.create(title="test cat")
-        self.subcategory = SubCategory.objects.create(title="test subcat",
-                                                      category=self.category)
-        self.advertisements = [Advertisement.objects.create(
+        self.subcategory1 = SubCategory.objects.create(title="test subcat",
+                                                       category=self.category
+                                                       )
+        self.subcategory2 = SubCategory.objects.create(title="test subcat2",
+                                                       category=self.category
+                                                       )
+        self.advertisements1 = [Advertisement.objects.create(
             title=fake.bs(), description=fake.bs(), email=fake.email(),
-            city=self.city, subcategory=self.subcategory, price=x)
+            city=self.city, subcategory=self.subcategory1, price=x)
                                for x in range(3)
                                ]
-        self.url = "/category/{}/".format(self.category.id)
+        self.advertisements2 = [Advertisement.objects.create(
+            title=fake.bs(), description=fake.bs(), email=fake.email(),
+            city=self.city, subcategory=self.subcategory2, price=x)
+                                for x in range(2)
+                                ]
 
-    def test_queryset(self):
+    def test_category_queryset(self):
+        self.url = "/category/{}/".format(self.category.id)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.context_data["advertisements"].count(), 5)
+
+    def test_subcategory1_queryset(self):
+        self.url = "/subcategory/{}/".format(self.subcategory1.id)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.context_data["advertisements"].count(), 3)
 
+    def test_subcategory2_queryset(self):
+        self.url = "/subcategory/{}/".format(self.subcategory2.id)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.context_data["advertisements"].count(), 2)
 
 
 
