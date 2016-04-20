@@ -25,3 +25,10 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+
+CACHES = {
+    "default": {
+        "BACKEND": 'django.core.cache.backends.memcached.MemcachedCache',
+        "SESSION_ENGINE": "django.contrib.sessions.backends.cache"
+    }
+}
