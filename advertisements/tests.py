@@ -2,11 +2,11 @@ from django.contrib.auth.models import User
 from django.test import TestCase, RequestFactory
 
 from faker import Faker
-
+from rest_framework import status
 from advertisements.models import City, Advertisement, SubCategory, Category
 from advertisements.views import get_current_city, query_sort
 from profiles.models import Profile
-
+from django.core.urlresolvers import reverse
 
 class ViewFunctionSessionTests(TestCase):
 
@@ -83,10 +83,22 @@ class ViewFunctionSessionTests(TestCase):
 class CategoryTests(TestCase):
 
     def setUp(self):
-        self.category = Category.objects.create(title="test")
+        fake = Faker()
+        self.city = City.objects.create(title="test city")
+        self.category = Category.objects.create(title="test cat")
+        self.subcategory = SubCategory.objects.create(title="test subcat",
+                                                      category=self.category)
+        self.advertisements = [Advertisement.objects.create(
+            title=fake.bs(), description=fake.bs(), email=fake.email(),
+            city=self.city, subcategory=self.subcategory, price=x)
+                               for x in range(3)
+                               ]
+        self.url = "/category/{}/".format(self.category.id)
 
-
-
+    def test_queryset(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.context_data["advertisements"].count(), 3)
 
 
 
