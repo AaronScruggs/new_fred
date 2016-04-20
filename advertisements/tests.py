@@ -55,8 +55,9 @@ class ViewFunctionSessionTests(TestCase):
         self.assertEqual(get_current_city(request), self.city_of_oz)
 
     """
-    Test that query_sort is correctly sorting querysets according to a
-    request querystring.
+    Test that the query_sort function is correctly sorting querysets according
+    to a request querystring. Also test that context_data contains the
+    right values.
     """
 
     def test_query_sort_high(self):
@@ -65,6 +66,7 @@ class ViewFunctionSessionTests(TestCase):
         qs = Advertisement.objects.filter(subcategory=self.subcategory)
         sorted_qs = query_sort(request.GET, qs)
         self.assertGreater(sorted_qs.first().price, sorted_qs.all()[1].price)
+        self.assertEqual(request.GET["price"], "high")
 
     def test_query_sort_low(self):
         request = self.factory.get("/subcategory/{}/?price=low".format(
@@ -72,6 +74,7 @@ class ViewFunctionSessionTests(TestCase):
         qs = Advertisement.objects.filter(subcategory=self.subcategory)
         sorted_qs = query_sort(request.GET, qs)
         self.assertLess(sorted_qs.first().price, sorted_qs.all()[1].price)
+        self.assertEqual(request.GET["price"], "low")
 
     def test_query_sort_blank(self):
         request = self.factory.get("/subcategory/{}".format(
@@ -79,9 +82,14 @@ class ViewFunctionSessionTests(TestCase):
         qs = Advertisement.objects.filter(subcategory=self.subcategory)
         sorted_qs = query_sort(request.GET, qs)
         self.assertLess(sorted_qs.first().price, sorted_qs.all()[1].price)
+        self.assertEqual(request.GET.get("price", None), None)
 
 
 class CategoryTests(TestCase):
+    """
+    Test that category and subcategory requests are returning the correct
+    advertisements.
+    """
 
     def setUp(self):
         fake = Faker()
