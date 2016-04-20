@@ -35,7 +35,7 @@ urlpatterns = [
     url(r'^advertisements/', include("advertisements.urls")),
     url(r'^subcategory/(?P<pk>\d+)/$', SubCategoryView.as_view(),
         name="subcategory_list"),
-    url(r'^category/(?P<pk>\d+)/$', CategoryView.as_view(),
+    url(r'^category/(?P<pk>\d+)/$', cache_page(60 * 5)(CategoryView.as_view()),
         name="category_list"),
 
     url(r'^allcities/$', AllCityList.as_view(), name="all_cities"),
