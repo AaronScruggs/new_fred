@@ -44,7 +44,7 @@ urlpatterns = [
     url(r"^api/", include('api.urls')),
     url(r'^logout/$', logout, {'next_page': reverse_lazy("main_page")},
         name='logout'),
-    url(r'^$', cache_page(60 * 5)(MainPageView.as_view()), name="main_page"),
+    url(r'^$', (MainPageView.as_view()), name="main_page"),
     url('^', include('django.contrib.auth.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
