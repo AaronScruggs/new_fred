@@ -81,7 +81,7 @@ class ViewFunctionSessionTests(TestCase):
             self.subcategory.pk))
         qs = Advertisement.objects.filter(subcategory=self.subcategory)
         sorted_qs = query_sort(request.GET, qs)
-        self.assertLess(sorted_qs.first().price, sorted_qs.all()[1].price)
+        self.assertGreater(sorted_qs.first().price, sorted_qs.all()[1].price)
         self.assertEqual(request.GET.get("price", None), None)
 
 
