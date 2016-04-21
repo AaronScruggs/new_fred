@@ -1,5 +1,5 @@
 from django.contrib import admin
-from advertisements.models import Advertisement, Category, SubCategory
+from advertisements.models import Advertisement, Category, SubCategory, City
 
 
 @admin.register(Advertisement)
@@ -25,4 +25,8 @@ class CategoryAdmin(admin.ModelAdmin):
 class SubCategoryAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "category")
 
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    list_display = ("title", "state")
 
+    list_filter = ["state"]

@@ -16,9 +16,13 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 class City(models.Model):
 
     title = models.CharField(max_length=255)
+    state = models.CharField(max_length=2, null=True)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        unique_together = (("title", "state"),)
 
 
 class Category(models.Model):
