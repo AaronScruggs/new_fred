@@ -18,9 +18,9 @@ ALLOWED_HOSTS=["*"]
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
+    #'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    #'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
@@ -50,4 +50,4 @@ CACHES = {
     }
 }
 
-CACHE_MIDDLEWARE_SECONDS=(60 * 2)
+#CACHE_MIDDLEWARE_SECONDS=(60 * 2)

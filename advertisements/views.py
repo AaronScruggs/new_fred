@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView,\
     RedirectView, UpdateView, DeleteView
-from django.views.generic.edit import FormMixin
 from rest_framework.authtoken.models import Token
 
 from advertisements.forms import AdvertisementForm, AdvertisementUpdateForm
@@ -208,7 +207,7 @@ class UserDetail(ListView):
         """
         profiled_user = User.objects.get(pk=self.kwargs['pk'])
         return Advertisement.objects.filter(
-            user=profiled_user).order_by("-modified_time")
+            user=profiled_user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

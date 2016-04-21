@@ -56,6 +56,7 @@ class Advertisement(models.Model):
                               blank=True)
     email = models.EmailField(max_length=254, null=True)
     zipcode = models.CharField(max_length=10, null=True, blank=True)
+    archived = models.BooleanField(default=False)
 
     city = models.ForeignKey(City, null=True)
     subcategory = models.ForeignKey(SubCategory, null=True)
@@ -71,3 +72,7 @@ class Advertisement(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ["-modified_time"]
+        default_related_name = "advertisements"

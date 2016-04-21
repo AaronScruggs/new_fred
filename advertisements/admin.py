@@ -4,7 +4,16 @@ from advertisements.models import Advertisement, Category, SubCategory
 
 @admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "description", "price", "subcategory", "user")
+    list_display = ("id", "title", "description", "price", "subcategory",
+                    "user", "archived", "city")
+    actions = ["archive_ads"]
+    search_fields = ["title", "description"]
+    date_hierarchy = "created_time"
+    list_filter = ["city", "subcategory"]
+
+    def archive_ads(self, request, queryset):
+        queryset.update(archived=True)
+    archive_ads.short_description = "Archive Ads"
 
 
 @admin.register(Category)
