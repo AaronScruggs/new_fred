@@ -95,7 +95,7 @@ class CategoryView(ListView):
         category = Category.objects.get(pk=self.kwargs["pk"])
         city = get_current_city(self.request)
 
-        qs = Advertisement.objects.select_related().filter(
+        qs = Advertisement.objects.select_related("city").filter(
             subcategory__category=category)
 
         if city:
@@ -129,7 +129,7 @@ class SubCategoryView(ListView):
         subcategory = SubCategory.objects.get(pk=self.kwargs["pk"])
         city = get_current_city(self.request)
 
-        qs = Advertisement.objects.filter(subcategory=subcategory)
+        qs = Advertisement.objects.select_related("city").filter(subcategory=subcategory)
         if city:
             qs = qs.filter(city__id=city.id)
 
