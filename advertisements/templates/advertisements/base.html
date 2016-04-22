@@ -1,5 +1,6 @@
 {% load bootstrap3 %}
 {% load staticfiles %}
+{% load socialaccount %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +24,10 @@
     {% else %}
         <h3><a href="{% url 'register' %}">Register</a> </h3>
         <h4><a href="{% url 'login' %}">Login</a> </h4>
+        <p>
+        <a href='{% provider_login_url "facebook" %}' >Login With Facebook</a>
+        </p>
+        <a href='{% provider_login_url "github" %}' >Login With Github</a>
     {% endif %}
     <h4><a href="{% url 'advertisement_create' %}">Create a post</a> </h4>
 
