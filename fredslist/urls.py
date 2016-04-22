@@ -21,31 +21,29 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.cache import cache_page
 
-
 from advertisements.views import CategoryView, SubCategoryView, MainPageView,\
     AllCityList, CityRedirect, UserDetail
 from profiles.views import RegisterUser
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-
     url(r'^users/register/$', RegisterUser.as_view(), name="register"),
     url(r'^users/detail/(?P<pk>\d+)/$', UserDetail.as_view(),
         name="user_detail"),
     url(r'^advertisements/', include("advertisements.urls")),
-    url(r'^subcategory/(?P<pk>\d+)/$', SubCategoryView.as_view(),
+    url(r'^subcategory/(?P<pk>\d+)/$',
+        cache_page(60 * 5)(SubCategoryView.as_view()),
         name="subcategory_list"),
-    url(r'^category/(?P<pk>\d+)/$', CategoryView.as_view(),
+    url(r'^category/(?P<pk>\d+)/$', cache_page(60 * 5)(CategoryView.as_view()),
         name="category_list"),
-
     url(r'^allcities/$', AllCityList.as_view(), name="all_cities"),
     url(r'cities/redirect/(?P<id>\d+)/$', CityRedirect.as_view(),
         name="city_redirect"),
     url(r"^api/", include('api.urls')),
+    url(r'^accounts/', include('allauth.urls')),
     url(r'^logout/$', logout, {'next_page': reverse_lazy("main_page")},
         name='logout'),
     url(r'^$', MainPageView.as_view(), name="main_page"),
     url('^', include('django.contrib.auth.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-#cache_page(60 * 5)
