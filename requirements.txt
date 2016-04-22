@@ -1,7 +1,9 @@
 coverage==4.0.3
 coveralls==1.1
+defusedxml==0.4.1
 dj-database-url==0.4.1
 Django==1.9.5
+django-allauth==0.25.2
 django-bootstrap3==7.0.1
 django-debug-toolbar==1.4
 django-extensions==1.6.1
@@ -9,11 +11,15 @@ djangorestframework==3.3.3
 docopt==0.6.2
 fake-factory==0.5.7
 gunicorn==19.4.5
+oauthlib==1.0.3
 Pillow==3.2.0
 psycopg2==2.6.1
 python-dateutil==2.5.2
 python-memcached==1.57
+python3-openid==3.0.10
+pytz==2016.3
 requests==2.9.1
+requests-oauthlib==0.6.1
 six==1.10.0
 sqlparse==0.1.19
 whitenoise==3.0
