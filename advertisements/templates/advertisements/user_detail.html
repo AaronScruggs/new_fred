@@ -5,8 +5,9 @@
 
 {% block content %}
 <h1>{{ profiled_user.username }}</h1>
-<h5>User Auth Token: {{ token }}</h5>
+
     {% if user_match %}
+        <h5>User Auth Token: {{ token }}</h5>
         <a href="?token=new"><button type="button" class="btn btn-default">New Auth Token</button></a>
     {% endif %}
 <ul>

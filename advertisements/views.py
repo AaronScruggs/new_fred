@@ -1,13 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView,\
     RedirectView, UpdateView, DeleteView
 from rest_framework.authtoken.models import Token
 
 from advertisements.forms import AdvertisementForm, AdvertisementUpdateForm
 from advertisements.models import Advertisement, SubCategory, Category, City
+
+import fredslist
 
 
 def get_current_city(request):
@@ -129,7 +131,8 @@ class SubCategoryView(ListView):
         subcategory = SubCategory.objects.get(pk=self.kwargs["pk"])
         city = get_current_city(self.request)
 
-        qs = Advertisement.objects.select_related("city").filter(subcategory=subcategory)
+        qs = Advertisement.objects.select_related("city").filter(
+            subcategory=subcategory)
         if city:
             qs = qs.filter(city__id=city.id)
 
@@ -196,7 +199,7 @@ class CityRedirect(RedirectView):
         return reverse("main_page")
 
 
-class UserDetail(ListView):
+class UserDetail(LoginRequiredMixin, ListView):
     template_name = "advertisements/user_detail.html"
     context_object_name = "advertisements"
 
@@ -205,6 +208,7 @@ class UserDetail(ListView):
         :return: All of the users advertisements, sorted by the most recently
         created or modified.
         """
+
         profiled_user = User.objects.get(pk=self.kwargs['pk'])
         return Advertisement.objects.filter(
             user=profiled_user)

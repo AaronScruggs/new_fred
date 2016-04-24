@@ -4,7 +4,8 @@ from advertisements.models import City, Category, SubCategory, Advertisement
 
 
 class UserSerializer(serializers.ModelSerializer):
-    advertisement_set = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    advertisements = serializers.PrimaryKeyRelatedField(many=True,
+                                                        read_only=True)
 
     class Meta:
         model = User
@@ -13,7 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 class CitySerializer(serializers.ModelSerializer):
 
-    advertisement_set = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    advertisements = serializers.PrimaryKeyRelatedField(many=True,
+                                                        read_only=True)
 
     class Meta:
         model = City
@@ -22,7 +24,8 @@ class CitySerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
 
-    subcategory_set = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    subcategory_set = serializers.PrimaryKeyRelatedField(many=True,
+                                                         read_only=True)
 
     class Meta:
         model = Category
@@ -31,7 +34,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class SubCategorySerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
-    advertisement_set = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    advertisements = serializers.PrimaryKeyRelatedField(many=True,
+                                                        read_only=True)
 
     class Meta:
         model = SubCategory
