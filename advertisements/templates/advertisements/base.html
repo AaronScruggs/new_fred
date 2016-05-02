@@ -29,7 +29,7 @@
         </p>
         <a href='{% provider_login_url "github" %}' >Login With Github</a>
     {% endif %}
-    <h4><a href="{% url 'advertisement_create' %}">Create a post</a> </h4>
+    <h4><a href="{% url 'ads:advertisement_create' %}">Create a post</a> </h4>
 
     {% block content %}
     {% endblock %}

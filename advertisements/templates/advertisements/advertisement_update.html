@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Update Advertisement</h1>
-    <form method="post" action="{% url 'advertisement_update' advertisement.id %}" enctype='multipart/form-data'>
+    <form method="post" action="{% url 'ads:advertisement_update' advertisement.id %}" enctype='multipart/form-data'>
         {% csrf_token %}
         {% bootstrap_form form %}
         <input type="submit" name="submit" value="update">

@@ -34,7 +34,7 @@
                <div> <img src="{{ ad.image.url }}" height="400" width="400"></div>
             {% endif %}
             {{ ad.display_date }}
-            <a href="{% url 'advertisement_detail' ad.id %}"> {{ ad.title }}</a>
+            <a href="{% url 'ads:advertisement_detail' ad.id %}"> {{ ad.title }}</a>
             {% if ad.price %}
                 ${{ ad.price }}
             {% endif %}
@@ -45,7 +45,7 @@
         {% else %}
             <li  class="list-group-item">
             {{ ad.display_date }}
-            <a href="{% url 'advertisement_detail' ad.id %}"> {{ ad.title }}</a>
+            <a href="{% url 'ads:advertisement_detail' ad.id %}"> {{ ad.title }}</a>
             {% if ad.price %}
                 ${{ ad.price }}
             {% endif %}

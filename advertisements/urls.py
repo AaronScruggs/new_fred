@@ -12,4 +12,3 @@ urlpatterns = [url(r'^(?P<pk>\d+)/$', AdvertisementDetail.as_view(),
                url(r'^delete/(?P<pk>\d+)/$', AdvertisementDelete.as_view(),
                    name="advertisement_delete"),
                ]
-

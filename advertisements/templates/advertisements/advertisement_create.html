@@ -3,7 +3,7 @@
 
 {% block content %}
     <h1>Create Advertisement</h1>
-    <form method="post" action="{% url "advertisement_create" %}" class="form" enctype="multipart/form-data">
+    <form method="post" action="{% url "ads:advertisement_create" %}" class="form" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons submit="Create" %}{% endbuttons %}
