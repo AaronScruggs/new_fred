@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^subcategory/(?P<pk>\d+)/$',
         cache_page(60 * 5)(SubCategoryView.as_view()),
         name="subcategory_list"),
-    url(r'^category/(?P<pk>\d+)/$', cache_page(60 * 5)(CategoryView.as_view()),
+    url(r'^category/(?P<pk>\d+)/$', CategoryView.as_view(),
         name="category_list"),
     url(r'^allcities/$', AllCityList.as_view(), name="all_cities"),
     url(r'cities/redirect/(?P<id>\d+)/$', CityRedirect.as_view(),

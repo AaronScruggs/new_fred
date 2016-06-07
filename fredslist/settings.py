@@ -170,13 +170,13 @@ REST_FRAMEWORK = {
 }
 
 
-CACHES = {
-    "default": {
-        "BACKEND": 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#     }
+# }
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+#SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 #CACHE_MIDDLEWARE_SECONDS=(60 * 2)
