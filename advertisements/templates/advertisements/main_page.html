@@ -1,6 +1,5 @@
 {% extends "advertisements/base.html" %}
 {% block content%}
-{% load cache %}
 
 
     {% if city_title %}
@@ -39,11 +38,11 @@
 <h1>More Cities</h1>
 <ul class="list-group">
 
-{% cache 600 city_list%}
+
 {% for city in cities %}
 <li  class="list-group-item"><a href="{% url 'city_redirect' city.id %}"> {{ city.title }}</a></li>
 {% endfor %}
-{% endcache %}
+
 
 </ul>
 
