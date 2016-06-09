@@ -206,8 +206,13 @@ class CityRedirect(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         logger.debug("city redirect")
         chosen_city = get_object_or_404(City, pk=self.kwargs["id"])
+        logger.debug("chosen_city: {}".format(chosen_city))
+
         self.request.session["city_id"] = chosen_city.id
+        logger.debug("city_id: {}".format(chosen_city.id))
+
         if self.request.user.pk:
+            logger.debug("user pk: {}".format(self.request.user.pk))
             self.request.user.profile.city = chosen_city
             self.request.user.profile.save()
         return reverse("main_page")
