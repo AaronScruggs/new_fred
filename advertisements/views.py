@@ -9,8 +9,9 @@ from rest_framework.authtoken.models import Token
 from advertisements.forms import AdvertisementForm, AdvertisementUpdateForm
 from advertisements.models import Advertisement, SubCategory, Category, City
 
-import fredslist
+import logging
 
+logger = logging.getLogger(__name__)
 
 def get_current_city(request):
     """
@@ -128,8 +129,13 @@ class SubCategoryView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
+        logger.debug("test")
+
         subcategory = SubCategory.objects.get(pk=self.kwargs["pk"])
+        logger.debug("subcat: {}".format(subcategory))
+
         city = get_current_city(self.request)
+        logger.debug("city: {}".format(city))
 
         qs = Advertisement.objects.select_related("city").filter(
             subcategory=subcategory)
