@@ -211,12 +211,12 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
-        },
-        'loggers': {
-            'ads': {
-                'handlers': ['file', 'error_file', 'console'],
-                'level': 'DEBUG',
-                'propagate': True
-            }
-    }
+        }
+    },
+    'loggers': {
+        'ads': {
+            'handlers': ['file', 'error_file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True
+        }
 }}
