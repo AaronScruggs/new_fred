@@ -10,3 +10,47 @@
 [DEBUG] 2016-06-09 14:02:48,539 views subcat: bikes
 [DEBUG] 2016-06-09 14:02:48,565 views city: San Diego 
 [DEBUG] 2016-06-09 14:02:48,567 views subcategory context
+[DEBUG] 2016-06-09 14:05:49,450 views On main page
+[DEBUG] 2016-06-09 14:05:57,653 views category test
+[DEBUG] 2016-06-09 14:05:57,771 views category: for sale
+[DEBUG] 2016-06-09 14:05:57,772 views category city: San Diego 
+[INFO] 2016-06-09 14:05:57,773 views category info
+[DEBUG] 2016-06-09 14:06:06,430 views On main page
+[DEBUG] 2016-06-09 14:06:20,390 views test
+[DEBUG] 2016-06-09 14:06:20,667 views subcat: bikes
+[DEBUG] 2016-06-09 14:06:20,684 views city: San Diego 
+[DEBUG] 2016-06-09 14:06:20,686 views subcategory context
+[DEBUG] 2016-06-09 14:06:36,132 views test
+[DEBUG] 2016-06-09 14:06:36,197 views subcat: realestate
+[DEBUG] 2016-06-09 14:06:36,212 views city: San Diego 
+[DEBUG] 2016-06-09 14:06:36,213 views subcategory context
+[DEBUG] 2016-06-09 14:06:44,141 views city redirect
+[DEBUG] 2016-06-09 14:06:44,263 views chosen_city: Chicago 
+[DEBUG] 2016-06-09 14:06:44,271 views city_id: 3
+[DEBUG] 2016-06-09 14:06:44,431 views On main page
+[DEBUG] 2016-06-09 14:06:51,719 views city redirect
+[DEBUG] 2016-06-09 14:06:51,731 views chosen_city: Phoenix 
+[DEBUG] 2016-06-09 14:06:51,741 views city_id: 5
+[DEBUG] 2016-06-09 14:06:51,801 views On main page
+[DEBUG] 2016-06-09 14:06:59,210 views city redirect
+[DEBUG] 2016-06-09 14:06:59,222 views chosen_city: San Diego 
+[DEBUG] 2016-06-09 14:06:59,231 views city_id: 8
+[DEBUG] 2016-06-09 14:06:59,283 views On main page
+[DEBUG] 2016-06-09 15:31:40,019 views On main page
+[DEBUG] 2016-06-09 15:31:48,489 views category test
+[DEBUG] 2016-06-09 15:31:48,623 views category: housing
+[DEBUG] 2016-06-09 15:31:48,623 views category city: San Diego 
+[INFO] 2016-06-09 15:31:48,624 views category info
+[DEBUG] 2016-06-09 15:31:54,898 views category test
+[DEBUG] 2016-06-09 15:31:54,997 views category: services
+[DEBUG] 2016-06-09 15:31:54,997 views category city: San Diego 
+[INFO] 2016-06-09 15:31:54,998 views category info
+[DEBUG] 2016-06-09 15:32:06,998 views On main page
+[DEBUG] 2016-06-09 15:33:18,619 views city redirect
+[DEBUG] 2016-06-09 15:33:18,810 views chosen_city: Los Angeles
+[DEBUG] 2016-06-09 15:33:18,831 views city_id: 2
+[DEBUG] 2016-06-09 15:33:19,058 views On main page
+[DEBUG] 2016-06-09 15:33:22,678 views city redirect
+[DEBUG] 2016-06-09 15:33:22,707 views chosen_city: San Diego 
+[DEBUG] 2016-06-09 15:33:22,716 views city_id: 8
+[DEBUG] 2016-06-09 15:33:22,753 views On main page
