@@ -11,7 +11,7 @@ from advertisements.models import Advertisement, SubCategory, Category, City
 
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("ads")
 
 def get_current_city(request):
     """
@@ -96,6 +96,7 @@ class CategoryView(ListView):
         :return: A queryset filtered by city and category.
         """
         logger.debug("category test")
+
         category = Category.objects.get(pk=self.kwargs["pk"])
         city = get_current_city(self.request)
         logger.debug("category city: {}".format(city))
@@ -113,6 +114,7 @@ class CategoryView(ListView):
         view is the display view ('list', 'thumb', or 'gallery') selected
         by the user.
         """
+        logger.info("category info")
         context = super().get_context_data(**kwargs)
         category = Category.objects.get(pk=self.kwargs["pk"])
         context["category"] = category
