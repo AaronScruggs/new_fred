@@ -1,0 +1,89 @@
+h2 {
+    font-family: Chalkduster;
+}
+
+.background {
+    background-color: lightgray;
+}
+
+.head_row {
+    width: auto;
+    height: 50px;
+}
+
+.greeting {
+    font-size: 18px;
+}
+
+.oath_img {
+    height: inherit;
+    width: 28px;
+}
+
+.github_login {
+    color: black;
+}
+
+.list-group .col-lg-6 .category_item {
+    background-color: #3DA0DB;
+    border-radius: 30px;
+    border-top-radius: 4px;
+}
+
+.list-group .subcategory_item {
+    background-color: #9acfea;
+    border-radius: 30px;
+    border-top-radius: 4px;
+}
+
+.category_text {
+    font-size: 36px;
+    font-family: inherit;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.subcategory_text {
+    font-size: 22px;
+    font-family: inherit;
+    font-weight: 400;
+    line-height: 1.1;
+    text-align: center;
+}
+
+.city_item {
+    background-color: #7CA38F;
+    border-radius: 10px;
+}
+
+
+.flexcontainer {
+   display: -webkit-flex;
+   display: flex;
+   -webkit-flex-direction: row;
+   flex-direction: row;
+}
+.list-group{
+    list-style: none;
+}
+
+.fa-github {
+    font-size:25px;
+}
+
+.fa-facebook-official {
+    font-size:25px;
+    color:#3B5998;
+}
+
+.subcategory_item {
+    text-align: center;
+}
+
+.dark_text {
+    color: #486069;
+}
+
+.header_bar {
+    background-color: #ADACAC;
+}

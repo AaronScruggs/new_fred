@@ -2,47 +2,57 @@
 {% block content%}
 
 
-    {% if city_title %}
-    <center><h2>{{ city_title }} Fredslist</h2></center>
-    {% else %}
-        <center><h2>Fredslist</h2></center>
-    {% endif %}
-
-
-
 <div class="container-fluid">
   <div class="row">
 
-<div class="col-md-2"></div>
+{#<div class="col-md-2"></div>#}
 
-  <div class="col-md-6">
+  <div class="col-md-9">
+
+  {% if city_title %}
+    <div class="text-center title">
+      <h2>Aaron's Emporium</h2>
+    <p><h2> {{ city_title }}</h2></p>
+    </div>
+    {% else %}
+        <center><h2>Aaron's Emporium</h2></center>
+    {% endif %}
+  <br>
+
   <ul class="list-group">
 {% for category in categories %}
-    <li  class="list-group-item">
-    <h1><a href="{% url 'category_list' category.0.id %}"> {{ category.0 }}</a></h1>
-
-        {% for sub in category.1 %}
-            <li  class="list-group-item">
-            <a href="{% url 'subcategory_list' sub.id %}"> {{ sub.title }}</a>
+    <li  class="col-lg-6">
+    <div>
+    <span class="list-group-item category_item category_text text-center">
+        <a href="{% url 'category_list' category.0.id %}">
+            <span class="dark_text">{{ category.0 }}</span>
+        </a>
+    </span>
+    <ul class="list-group">
+                {% for sub in category.1 %}
+            <li  class="list-group-item subcategory_item">
+            <a class="subcategory_text" href="{% url 'subcategory_list' sub.id %}">
+                <span class="dark_text">{{ sub.title }}</span>
+            </a>
             </li>
         {% endfor %}
-    <br>
-</li>
-
+    </ul>
+    </div>
+    </li>
 {% endfor %}
   </ul>
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-3">
 
-<h1>More Cities</h1>
+<h2>More Cities</h2>
 <ul class="list-group">
 
-
+<br>
 {% for city in cities %}
-<li  class="list-group-item"><a href="{% url 'city_redirect' city.id %}"> {{ city.title }}</a></li>
+<li  class="list-group-item city_item"><a href="{% url 'city_redirect' city.id %}"><span class="dark_text"> {{ city.title }}</span></a></li>
 {% endfor %}
-
+<br>
 
 </ul>
 
@@ -52,3 +62,5 @@
 </div>
 
 {% endblock %}
+
+// javascript block here.
