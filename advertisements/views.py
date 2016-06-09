@@ -95,8 +95,10 @@ class CategoryView(ListView):
         """
         :return: A queryset filtered by city and category.
         """
+        logger.debug("category test")
         category = Category.objects.get(pk=self.kwargs["pk"])
         city = get_current_city(self.request)
+        logger.debug("category city: {}".format(city))
 
         qs = Advertisement.objects.select_related("city").filter(
             subcategory__category=category)
