@@ -61,6 +61,7 @@ class MainPageView(ListView):
         :return: A queryset of all categories and thier associated
         subcategories.
         """
+        logger.debug("On main page")
         qs = []
         for cat in Category.objects.select_related().all():
             qs.append((cat, SubCategory.objects.filter(category=cat)))
@@ -99,6 +100,7 @@ class CategoryView(ListView):
 
         category = Category.objects.get(pk=self.kwargs["pk"])
         city = get_current_city(self.request)
+        logger.debug("category: {}".format(category))
         logger.debug("category city: {}".format(city))
 
         qs = Advertisement.objects.select_related("city").filter(
@@ -149,6 +151,7 @@ class SubCategoryView(ListView):
         return query_sort(self.request.GET, qs)
 
     def get_context_data(self, **kwargs):
+        logger.debug("subcategory context")
         context = super().get_context_data(**kwargs)
         category = SubCategory.objects.get(pk=self.kwargs["pk"])
         context["category"] = category
@@ -201,6 +204,7 @@ class CityRedirect(RedirectView):
     permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
+        logger.debug("city redirect")
         chosen_city = get_object_or_404(City, pk=self.kwargs["id"])
         self.request.session["city_id"] = chosen_city.id
         if self.request.user.pk:
