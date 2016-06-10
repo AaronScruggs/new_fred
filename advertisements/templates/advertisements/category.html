@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <h1>{{ category.title }}</h1>
+    <span class="title_text"><h1>{{ category.title }}</h1></span>
 
 
     <div class="btn-group" role="group">
@@ -23,34 +23,46 @@
 <br>
     <br>
 <div class="list-group">
+<br>
     {% for ad in advertisements %}
 
 
         {% if view == "thumb" or view == "gallery" %}
-            <li  class="list-group-item">
+            <li  class="list-group-item ad_listing">
+            <a href="{% url 'ads:advertisement_detail' ad.id %}">
+
             {% if ad.image and view == "thumb" %}
                 <img src="{{ ad.image.url }}" height="100" width="100">
             {% elif ad.image and view == "gallery" %}
                <div> <img src="{{ ad.image.url }}" height="400" width="400"></div>
             {% endif %}
+
+            <span class="dark_text">
             {{ ad.display_date }}
-            <a href="{% url 'ads:advertisement_detail' ad.id %}"> {{ ad.title }}</a>
+
+             {{ ad.title }}
             {% if ad.price %}
                 ${{ ad.price }}
             {% endif %}
              {{ ad.city }}
                 <br>
+            </span>
+            </a>
             </li>
 
         {% else %}
-            <li  class="list-group-item">
+            <li  class="list-group-item ad_listing">
+            <a href="{% url 'ads:advertisement_detail' ad.id %}">
+            <span class="dark_text">
             {{ ad.display_date }}
-            <a href="{% url 'ads:advertisement_detail' ad.id %}"> {{ ad.title }}</a>
+             {{ ad.title }}
             {% if ad.price %}
                 ${{ ad.price }}
             {% endif %}
              {{ ad.city }}
                 <br>
+            </span>
+            </a>
             </li>
 
         {% endif %}
@@ -58,6 +70,7 @@
 
 
     {% endfor %}
+<br>
 
 </div>
     {% bootstrap_pagination page_obj %}

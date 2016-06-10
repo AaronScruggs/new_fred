@@ -2,6 +2,10 @@ h2 {
     font-family: Chalkduster;
 }
 
+.title_text {
+    font-family: Chalkduster;
+}
+
 .background {
     background-color: lightgray;
 }
@@ -34,6 +38,27 @@ h2 {
     background-color: #9acfea;
     border-radius: 30px;
     border-top-radius: 4px;
+}
+
+.ad_listing {
+    background-color: #9acfea;
+    border-radius: 10px;
+}
+
+.ad_text {
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.sort_button {
+    color: white;
+}
+
+.btn-default {
+    color: white;
+    background-color: #8A6775;
 }
 
 .category_text {
@@ -81,7 +106,7 @@ h2 {
 }
 
 .dark_text {
-    color: #486069;
+    color: #35464D;
 }
 
 .header_bar {
